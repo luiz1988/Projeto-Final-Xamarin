@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using TestDrive.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -75,6 +75,8 @@ namespace TestDrive.Views
         }
 
         bool temMP3Player;
+        private Veiculo veiculo;
+
         public bool TemMP3Player
         {
             get
@@ -104,6 +106,11 @@ namespace TestDrive.Views
             this.Veiculo = veiculo;
             InitializeComponent();
             this.BindingContext = this;
+        }
+
+        public DetalheView(Veiculo veiculo)
+        {
+            this.veiculo = veiculo;
         }
 
         private void botaoProximo_Clicked(object sender, EventArgs e)
