@@ -4,18 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestDrive.Models;
+using TestDrive.ViewsModels;
 using Xamarin.Forms;
 
 namespace TestDrive.Views
 {
     public partial class ListagemView : ContentPage
     {
+        public ListagemViewModel ViewModel { get; set; }
+
         public ListagemView()
         {
             InitializeComponent();
+            this.ViewModel = new ListagemViewModel();
+            this.BindingContext = this.ViewModel;
         }
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             base.OnAppearing();
             MessagingCenter.Subscribe<Veiculo>(this, "VeiculoSelecionado",
@@ -23,6 +28,14 @@ namespace TestDrive.Views
                 {
                     Navigation.PushAsync(new DetalheView(msg));
                 });
+
+            MessagingCenter.Subscribe<Exception>(this, "FalhaListagem",
+                (msg) =>
+                {
+                    DisplayAlert("Erro", "Ocorreu um erro ao obter a listagem de veículos. Por favor tente novamente mais tarde.", "Ok");
+                });
+
+            await this.ViewModel.GetVeiculos();
         }
 
         protected override void OnDisappearing()
@@ -30,6 +43,7 @@ namespace TestDrive.Views
             base.OnDisappearing();
 
             MessagingCenter.Unsubscribe<Veiculo>(this, "VeiculoSelecionado");
+            MessagingCenter.Unsubscribe<Exception>(this, "FalhaListagem");
         }
     }
 }
