@@ -53,13 +53,48 @@ namespace TestDrive.Views
             set
             {
                 temFreioABS = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Valortotal));
+            }
+        }
 
-                if (temFreioABS)
-                    DisplayAlert("Freio ABS", "Ligado!", "Ok");
-                else
-                {
-                    DisplayAlert("Freio ABS", "Desligado!", "Ok");
-                }
+        bool temArCondicionado;
+        public bool TemArCondicionado
+        {
+            get
+
+            {
+                return temArCondicionado;
+            }
+            set
+            {
+                temArCondicionado = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Valortotal));
+            }
+        }
+
+        bool temMP3Player;
+        public bool TemMP3Player
+        {
+            get
+
+            {
+                return temMP3Player;
+            }
+            set
+            {
+                temMP3Player = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Valortotal));
+            }
+        }
+
+        public string Valortotal { get {
+                return string.Format("Valor Total: R$ {0}", Veiculo.preco
+                    + (TemFreioABS ? FREIO_ABS : 0)
+                    + (TemArCondicionado ? AR_CONDICIONADO : 0)
+                    + (TemMP3Player ? MP3_PLAYER : 0));
             }
         }
 

@@ -13,11 +13,31 @@ namespace TestDrive.Views
 	public partial class AgendamentoView : ContentPage
 	{
         public Veiculo Veiculo { get; set; }
-        public AgendamentoView (Veiculo veiculo)
-		{
-			InitializeComponent ();
+        public string Nome { get; set; }
+        public string Fone { get; set; }
+        public string Email { get; set; }
+
+        DateTime dataAgendamento = DateTime.Today;
+        public DateTime DataAgendamento {
+            get {
+                return dataAgendamento;
+            }
+            set {
+                dataAgendamento = value;
+            }
+        }
+        public TimeSpan HoraAgendamento { get; set; }
+
+        public AgendamentoView(Veiculo veiculo)
+        {
             this.Veiculo = veiculo;
+            InitializeComponent();
             this.BindingContext = this;
-		}
-	}
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            DisplayAlert("Salvar Agendamento", "Nome: " + Nome, "Ok");
+        }
+    }
 }
