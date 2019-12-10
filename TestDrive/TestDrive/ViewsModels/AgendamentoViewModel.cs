@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using TestDrive.Data;
 using TestDrive.Models;
 using Xamarin.Forms;
 
@@ -88,7 +89,7 @@ namespace TestDrive.ViewsModels
             }
         }
 
-
+        //Chama no momento que abre a tela
         public AgendamentoViewModel(Veiculo veiculo)
         {
             this.Agendamento = new Agendamento();
@@ -96,10 +97,32 @@ namespace TestDrive.ViewsModels
 
             AgendarCommand = new Command(() =>
             {
-                MessagingCenter.Send<Agendamento>(this.Agendamento
-                    , "Agendamento");
+                if (this.SalvarAgendamento())
+                {
+                    MessagingCenter.Send<Agendamento>(this.Agendamento, "Agendamento");
+                }
+                else
+                {
+                    MessagingCenter.Subscribe<ArgumentException>(this, "Falha",
+                        (msg) =>
+                        {
+                           // DisplayAlert("Agendamento", "Pedido não pôde ser realizado!", "ok");
+                        });
+                }
             });
         }
+
+        //Persiste o agendamento do veiculo localmente
+        public Boolean SalvarAgendamento()
+        {
+            using (var connection = DependencyService.Get<ISQLite>().getConnection())
+            {
+
+            }
+
+            return false;
+        }
+
 
         public ICommand AgendarCommand { get; set; }
     }
