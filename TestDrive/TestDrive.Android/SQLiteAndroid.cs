@@ -23,7 +23,11 @@ namespace TestDrive.Droid
 
         public SQLiteConnection getConnection()
         {
-            var fullPathDB = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path, pathDB);
+
+            //Android.OS.Environment.ExternalStorageDirectory.Path
+
+            var url = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            var fullPathDB = Path.Combine(url, pathDB);
 
             SQLiteConnection connection = new SQLite.SQLiteConnection(fullPathDB);
 
