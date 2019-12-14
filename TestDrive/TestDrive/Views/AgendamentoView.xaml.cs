@@ -36,7 +36,7 @@ namespace TestDrive.Views
                     E-mail: {3}
                     Data Agendamento: {4}
                     Hora Agendamento: {5}",
-                    msg.Veiculo.Nome,
+                    msg.Modelo,
                     msg.Nome,
                     msg.Fone,
                     msg.Email,
