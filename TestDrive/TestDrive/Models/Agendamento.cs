@@ -6,7 +6,6 @@ namespace TestDrive.Models
 {
     public class Agendamento
     {
-        public Veiculo Veiculo { get;  set; }
         public string Nome { get;  set; }
         public string Fone { get;  set; }
         public string Email { get;  set; }
@@ -18,6 +17,12 @@ namespace TestDrive.Models
             this.Nome = nome;
             this.Fone = fone;
             this.Email = email;
+            this.Modelo = modelo;
+            this.Preco = preco;
+        }
+
+        public Agendamento(string modelo, decimal preco)
+        {
             this.Modelo = modelo;
             this.Preco = preco;
         }

@@ -95,8 +95,7 @@ namespace TestDrive.ViewsModels
         //Chama no momento que abre a tela
         public AgendamentoViewModel(Veiculo veiculo)
         {
-            this.Agendamento = new Agendamento("nome", "telefone", "email", veiculo.Nome, veiculo.Preco);
-            this.Agendamento.Veiculo = veiculo;
+            this.Agendamento = new Agendamento(veiculo.Nome, veiculo.Preco);
 
             AgendarCommand = new Command(() =>
             {
@@ -109,7 +108,7 @@ namespace TestDrive.ViewsModels
                     MessagingCenter.Subscribe<ArgumentException>(this, "Falha",
                         (msg) =>
                         {
-                           // DisplayAlert("Agendamento", "Pedido não pôde ser realizado!", "ok");
+                           //DisplayAlert("Agendamento", "Pedido não pôde ser realizado!", "ok");
                         });
                 }
             });
@@ -120,15 +119,18 @@ namespace TestDrive.ViewsModels
         {
             using (var connection = DependencyService.Get<ISQLite>().getConnection())
             {
-
-                AgendamentoDAO dao = new AgendamentoDAO(connection);
-                dao.Salvar(new Agendamento(Nome, Fone, Email, Modelo, Preco));
-
+                try
+                {
+                    AgendamentoDAO dao = new AgendamentoDAO(connection);
+                    dao.Salvar(new Agendamento(Nome, Fone, Email, Modelo, Preco));
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-
-            return false;
         }
-
 
         public ICommand AgendarCommand { get; set; }
     }
