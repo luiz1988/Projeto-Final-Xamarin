@@ -12,17 +12,20 @@ namespace TestDrive.ViewsModels
     {
         public Agendamento Agendamento { get; set; }
 
-        public Veiculo Veiculo
+        public  string Modelo
         {
-            get
-            {
-                return Agendamento.Veiculo;
-            }
-            set
-            {
-                Agendamento.Veiculo = value;
-            }
+            get { return this.Agendamento.Modelo;  }
+            
+            set { this.Agendamento.Modelo = value; }
+
         }
+
+        public decimal Preco 
+        {
+            get { return this.Agendamento.Preco; }
+            set { this.Agendamento.Preco = value; }
+        }
+
 
         public string Nome
         {
@@ -92,7 +95,7 @@ namespace TestDrive.ViewsModels
         //Chama no momento que abre a tela
         public AgendamentoViewModel(Veiculo veiculo)
         {
-            this.Agendamento = new Agendamento();
+            this.Agendamento = new Agendamento("nome", "telefone", "email", veiculo.Nome, veiculo.Preco);
             this.Agendamento.Veiculo = veiculo;
 
             AgendarCommand = new Command(() =>
@@ -117,6 +120,9 @@ namespace TestDrive.ViewsModels
         {
             using (var connection = DependencyService.Get<ISQLite>().getConnection())
             {
+
+                AgendamentoDAO dao = new AgendamentoDAO(connection);
+                dao.Salvar(new Agendamento(Nome, Fone, Email, Modelo, Preco));
 
             }
 
